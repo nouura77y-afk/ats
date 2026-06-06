@@ -1,0 +1,421 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>تانيا - التوظيف</title>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Arabic:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  :root {
+    --bg: #f8f8f8;
+    --surface: #ffffff;
+    --border: #e8e8e8;
+    --text: #1a1a2e;
+    --muted: #888;
+    --blue: #1b3a8c;
+    --blue-light: #eef1fa;
+    --blue-hover: #152e70;
+    --pink: #e91e8c;
+    --pink-light: #fde8f4;
+    --danger: #c0392b;
+  }
+  body {
+    font-family: 'IBM Plex Sans Arabic', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    min-height: 100vh;
+    padding: 0 0 80px;
+  }
+
+  /* Hero header */
+  .page-header {
+    background: var(--blue);
+    padding: 32px 20px 48px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+  .page-header::before {
+    content: '';
+    position: absolute;
+    bottom: -2px; left: 0; right: 0;
+    height: 40px;
+    background: var(--bg);
+    border-radius: 50% 50% 0 0 / 100% 100% 0 0;
+  }
+  .logo-wrap {
+    display: inline-block;
+    background: white;
+    border-radius: 18px;
+    padding: 14px 20px;
+    margin-bottom: 18px;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.15);
+  }
+  .logo-wrap img { height: 60px; display: block; }
+  .page-header h1 { font-size: 22px; font-weight: 600; color: white; margin-bottom: 8px; }
+  .page-header p { font-size: 14px; color: rgba(255,255,255,0.75); }
+
+  .form-card {
+    max-width: 620px;
+    margin: -10px auto 0;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 18px;
+    overflow: hidden;
+    box-shadow: 0 2px 20px rgba(0,0,0,0.06);
+    margin-left: auto; margin-right: auto;
+    position: relative;
+    z-index: 1;
+  }
+  .section-title {
+    padding: 22px 28px 0;
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    color: var(--muted);
+    text-transform: uppercase;
+    border-top: 1px solid var(--border);
+    margin-top: 4px;
+  }
+  .section-title:first-child { border-top: none; margin-top: 0; }
+  .section-title.pink { color: var(--pink); }
+  .form-body { padding: 14px 28px 24px; }
+  .field { margin-top: 16px; }
+  .field label { display: block; font-size: 13px; font-weight: 500; color: var(--text); margin-bottom: 7px; }
+  .field label .req { color: var(--pink); margin-right: 2px; }
+  .field input, .field select, .field textarea {
+    width: 100%;
+    padding: 10px 14px;
+    border: 1.5px solid var(--border);
+    border-radius: 10px;
+    font-family: 'IBM Plex Sans Arabic', sans-serif;
+    font-size: 14px;
+    color: var(--text);
+    background: var(--surface);
+    outline: none;
+    transition: border-color 0.15s, box-shadow 0.15s;
+    appearance: none;
+  }
+  .field input:focus, .field select:focus, .field textarea:focus {
+    border-color: var(--blue);
+    box-shadow: 0 0 0 3px rgba(27,58,140,0.08);
+  }
+  .field textarea { min-height: 100px; resize: vertical; line-height: 1.6; }
+  .field-row { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+  .select-wrap { position: relative; }
+  .select-wrap::after {
+    content: '▾';
+    position: absolute;
+    left: 14px; top: 50%;
+    transform: translateY(-50%);
+    color: var(--muted);
+    pointer-events: none;
+    font-size: 12px;
+  }
+  .select-wrap select { padding-left: 32px; cursor: pointer; }
+
+  .skills-box {
+    border: 1.5px solid var(--border);
+    border-radius: 10px;
+    padding: 8px 10px;
+    display: flex; flex-wrap: wrap; gap: 6px;
+    cursor: text; min-height: 46px;
+    transition: border-color 0.15s, box-shadow 0.15s;
+  }
+  .skills-box:focus-within {
+    border-color: var(--blue);
+    box-shadow: 0 0 0 3px rgba(27,58,140,0.08);
+  }
+  .skill-tag {
+    background: var(--blue-light);
+    color: var(--blue);
+    border: 1px solid #c5d0ee;
+    padding: 3px 10px 3px 6px;
+    border-radius: 20px;
+    font-size: 12px; font-weight: 500;
+    display: flex; align-items: center; gap: 5px;
+  }
+  .skill-tag button { background: none; border: none; cursor: pointer; color: var(--blue); font-size: 15px; line-height: 1; padding: 0; opacity: 0.6; }
+  .skill-tag button:hover { opacity: 1; }
+  .skills-box input { border: none; outline: none; background: none; font-size: 13px; color: var(--text); font-family: 'IBM Plex Sans Arabic', sans-serif; min-width: 100px; flex: 1; padding: 4px 2px; }
+  .hint { font-size: 12px; color: var(--muted); margin-top: 5px; }
+
+  .submit-btn {
+    width: 100%; margin-top: 28px; padding: 13px;
+    background: linear-gradient(135deg, var(--blue) 0%, #2a4fbd 100%);
+    color: white; border: none; border-radius: 11px;
+    font-family: 'IBM Plex Sans Arabic', sans-serif;
+    font-size: 15px; font-weight: 600; cursor: pointer;
+    transition: opacity 0.15s, transform 0.1s;
+    position: relative; overflow: hidden;
+  }
+  .submit-btn::after {
+    content: '';
+    position: absolute;
+    bottom: 0; right: 0;
+    width: 80px; height: 100%;
+    background: var(--pink);
+    clip-path: polygon(40px 0, 100% 0, 100% 100%, 0 100%);
+    opacity: 0.6;
+  }
+  .submit-btn span { position: relative; z-index: 1; }
+  .submit-btn:hover { opacity: 0.93; }
+  .submit-btn:active { transform: scale(0.99); }
+  .submit-btn:disabled { opacity: 0.6; cursor: not-allowed; }
+
+  .error-msg { color: var(--danger); font-size: 12px; margin-top: 5px; display: none; }
+  .field.has-error input, .field.has-error select, .field.has-error textarea,
+  .field.has-error .skills-box { border-color: var(--danger); }
+  .field.has-error .error-msg { display: block; }
+
+  .success-screen { display: none; text-align: center; padding: 60px 28px; }
+  .success-icon {
+    width: 80px; height: 80px;
+    background: var(--blue);
+    border-radius: 50%;
+    display: inline-flex; align-items: center; justify-content: center;
+    margin-bottom: 20px;
+    position: relative;
+  }
+  .success-icon::after {
+    content: '';
+    position: absolute;
+    inset: -4px;
+    border-radius: 50%;
+    border: 3px solid var(--pink);
+    opacity: 0.5;
+  }
+  .success-icon svg { width: 38px; height: 38px; stroke: white; fill: none; stroke-width: 2.5; stroke-linecap: round; stroke-linejoin: round; }
+  .success-screen h2 { font-size: 22px; font-weight: 600; margin-bottom: 10px; color: var(--blue); }
+  .success-screen p { font-size: 15px; color: var(--muted); line-height: 1.6; }
+
+  .loading-overlay { display: none; position: fixed; inset: 0; background: rgba(255,255,255,0.85); z-index: 100; align-items: center; justify-content: center; }
+  .loading-overlay.show { display: flex; }
+  .spinner { width: 40px; height: 40px; border: 3px solid var(--border); border-top-color: var(--blue); border-radius: 50%; animation: spin 0.7s linear infinite; }
+  @keyframes spin { to { transform: rotate(360deg); } }
+
+  .footer { text-align: center; padding: 24px; font-size: 12px; color: var(--muted); }
+  .footer span { color: var(--pink); font-weight: 600; }
+
+  @media (max-width: 500px) {
+    .field-row { grid-template-columns: 1fr; }
+    .form-body { padding: 14px 18px 20px; }
+    .section-title { padding-right: 18px; }
+    .form-card { margin: -10px 12px 0; }
+  }
+</style>
+</head>
+<body>
+
+<div class="page-header">
+  <div class="logo-wrap">
+    <img src="data:image/jpeg;base64,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" alt="شعار تانيا" />
+  </div>
+  <h1>انضم إلى فريق تانيا</h1>
+  <p>أكمل النموذج وسيتواصل معك الفريق خلال 3-5 أيام عمل</p>
+</div>
+
+<div style="max-width:620px; margin:0 auto; padding: 0 12px;">
+<div class="form-card">
+  <div id="form-content">
+    <div class="section-title form-body" style="padding-bottom:0">المعلومات الشخصية</div>
+    <div class="form-body">
+      <div class="field-row">
+        <div class="field" id="f-name-wrap">
+          <label>الاسم الكامل <span class="req">*</span></label>
+          <input type="text" id="f-name" placeholder="محمد العتيبي" autocomplete="name" />
+          <div class="error-msg">يرجى إدخال الاسم</div>
+        </div>
+        <div class="field" id="f-email-wrap">
+          <label>البريد الإلكتروني <span class="req">*</span></label>
+          <input type="email" id="f-email" placeholder="name@email.com" autocomplete="email" />
+          <div class="error-msg">يرجى إدخال بريد صحيح</div>
+        </div>
+      </div>
+      <div class="field-row">
+        <div class="field">
+          <label>رقم الجوال</label>
+          <input type="tel" id="f-phone" placeholder="+966 5X XXX XXXX" autocomplete="tel" />
+        </div>
+        <div class="field">
+          <label>المدينة</label>
+          <input type="text" id="f-city" placeholder="الرياض" />
+        </div>
+      </div>
+    </div>
+
+    <div class="section-title form-body" style="padding-bottom:0">تفاصيل الوظيفة</div>
+    <div class="form-body">
+      <div class="field-row">
+        <div class="field" id="f-job-wrap">
+          <label>الوظيفة المتقدم عليها <span class="req">*</span></label>
+          <div class="select-wrap">
+            <select id="f-job">
+              <option value="">اختر الوظيفة...</option>
+              <option>مطور واجهات أمامية</option>
+              <option>مطور تطبيقات موبايل</option>
+              <option>محلل بيانات</option>
+              <option>مدير مشاريع</option>
+              <option>مصمم UX/UI</option>
+              <option>مطور Back-end</option>
+              <option>DevOps Engineer</option>
+              <option>أخرى</option>
+            </select>
+          </div>
+          <div class="error-msg">يرجى اختيار الوظيفة</div>
+        </div>
+        <div class="field">
+          <label>المؤهل الأكاديمي</label>
+          <div class="select-wrap">
+            <select id="f-edu">
+              <option>بكالوريوس</option>
+              <option>ماجستير</option>
+              <option>دكتوراه</option>
+              <option>دبلوم</option>
+              <option>ثانوية عامة</option>
+            </select>
+          </div>
+        </div>
+      </div>
+      <div class="field-row">
+        <div class="field">
+          <label>سنوات الخبرة</label>
+          <div class="select-wrap">
+            <select id="f-exp">
+              <option value="0">أقل من سنة</option>
+              <option value="1">1-2 سنة</option>
+              <option value="3">3-5 سنوات</option>
+              <option value="6">6-10 سنوات</option>
+              <option value="11">أكثر من 10 سنوات</option>
+            </select>
+          </div>
+        </div>
+        <div class="field">
+          <label>الراتب المتوقع (ريال)</label>
+          <input type="text" id="f-salary" placeholder="مثال: 15,000" />
+        </div>
+      </div>
+    </div>
+
+    <div class="section-title form-body" style="padding-bottom:0">المهارات والخبرة</div>
+    <div class="form-body">
+      <div class="field">
+        <label>المهارات</label>
+        <div class="skills-box" id="skills-box" onclick="document.getElementById('skill-inp').focus()">
+          <input type="text" id="skill-inp" placeholder="اكتب مهارة واضغط Enter..." onkeydown="addSkill(event)" />
+        </div>
+        <div class="hint">اضغط Enter بعد كل مهارة</div>
+      </div>
+      <div class="field" id="f-bio-wrap">
+        <label>نبذة مختصرة <span class="req">*</span></label>
+        <textarea id="f-bio" placeholder="اكتب عن خبراتك وإنجازاتك وما يميزك عن غيرك..."></textarea>
+        <div class="error-msg">يرجى كتابة نبذة مختصرة</div>
+      </div>
+      <div class="field">
+        <label>رابط LinkedIn أو Portfolio</label>
+        <input type="url" id="f-link" placeholder="https://linkedin.com/in/..." />
+      </div>
+      <button class="submit-btn" onclick="submitForm()"><span>إرسال الطلب ←</span></button>
+    </div>
+  </div>
+
+  <div class="success-screen" id="success-screen">
+    <div class="success-icon">
+      <svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"></polyline></svg>
+    </div>
+    <h2>تم إرسال طلبك بنجاح!</h2>
+    <p>شكراً لاهتمامك بالانضمام إلى <strong>تانيا</strong>.<br>سيتواصل معك فريقنا خلال 3-5 أيام عمل.</p>
+  </div>
+</div>
+
+<div class="footer">
+  <span>Tania</span> · جميع الحقوق محفوظة © 2025
+</div>
+</div>
+
+<div class="loading-overlay" id="loading">
+  <div class="spinner"></div>
+</div>
+
+<script>
+const SUPABASE_URL = 'https://ueerrzyriehzbiqoswrp.supabase.co';
+const SUPABASE_KEY = 'sb_publishable_6obVf_64REC4skcVQVU_Bg_GY4XlV1K';
+let skills = [];
+
+function addSkill(e) {
+  if (e.key === 'Enter') {
+    e.preventDefault();
+    const val = e.target.value.trim();
+    if (val && !skills.includes(val)) { skills.push(val); renderSkills(); }
+    e.target.value = '';
+  }
+}
+function removeSkill(s) { skills = skills.filter(x => x !== s); renderSkills(); }
+function renderSkills() {
+  const box = document.getElementById('skills-box');
+  const inp = document.getElementById('skill-inp');
+  box.innerHTML = '';
+  skills.forEach(s => {
+    const tag = document.createElement('span');
+    tag.className = 'skill-tag';
+    tag.innerHTML = s + ' <button type="button" onclick="removeSkill(\'' + s + '\')">×</button>';
+    box.appendChild(tag);
+  });
+  box.appendChild(inp);
+}
+function validate() {
+  let valid = true;
+  const checks = [
+    { id: 'f-name', wrap: 'f-name-wrap', test: v => v.length > 1 },
+    { id: 'f-email', wrap: 'f-email-wrap', test: v => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v) },
+    { id: 'f-job', wrap: 'f-job-wrap', test: v => v !== '' },
+    { id: 'f-bio', wrap: 'f-bio-wrap', test: v => v.length > 10 },
+  ];
+  checks.forEach(c => {
+    const el = document.getElementById(c.id);
+    const wrap = document.getElementById(c.wrap);
+    if (!c.test(el.value.trim())) { wrap.classList.add('has-error'); valid = false; }
+    else { wrap.classList.remove('has-error'); }
+  });
+  return valid;
+}
+async function submitForm() {
+  if (!validate()) return;
+  document.getElementById('loading').classList.add('show');
+  const payload = {
+    name: document.getElementById('f-name').value.trim(),
+    email: document.getElementById('f-email').value.trim(),
+    phone: document.getElementById('f-phone').value.trim(),
+    city: document.getElementById('f-city').value.trim(),
+    job: document.getElementById('f-job').value,
+    edu: document.getElementById('f-edu').value,
+    exp: document.getElementById('f-exp').value,
+    salary: document.getElementById('f-salary').value.trim(),
+    skills: skills,
+    bio: document.getElementById('f-bio').value.trim(),
+    link: document.getElementById('f-link').value.trim(),
+    status: 'new',
+  };
+  try {
+    const res = await fetch(SUPABASE_URL + '/rest/v1/candidates', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', 'apikey': SUPABASE_KEY, 'Authorization': 'Bearer ' + SUPABASE_KEY, 'Prefer': 'return=minimal' },
+      body: JSON.stringify(payload)
+    });
+    document.getElementById('loading').classList.remove('show');
+    if (res.ok || res.status === 201) {
+      document.getElementById('form-content').style.display = 'none';
+      document.getElementById('success-screen').style.display = 'block';
+    } else {
+      const err = await res.text();
+      alert('حدث خطأ: ' + err);
+    }
+  } catch(e) {
+    document.getElementById('loading').classList.remove('show');
+    alert('تعذر الاتصال بالخادم.');
+  }
+}
+</script>
+</body>
+</html>
